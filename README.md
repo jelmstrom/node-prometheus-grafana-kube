@@ -21,25 +21,28 @@ To view dashboard :
 ## Install prometheus
 Create config : 
 ` kubectl apply -f minikube_config/prometheus-config.yaml`
-
+```
 -> configmap "prometheus-config-pod" created
+```
 
 `kubectl apply -f minikube_config/prometheus.yml`
+
+```
 ->  clusterrole "prometheus" configured
     serviceaccount "default" configured
     clusterrolebinding "prometheus" configured
     deployment "prometheus" configured
     service "prometheus" configured 
-
+```
  `minikube service --namespace=default prometheus` 
  to open the UI of prometheus (needed later)   
 
 ## Install grafana 
 `kubectl apply -f minikube_config/grafana.yml`
-
+```
 ->  deployment "grafana" configured
     service "grafana" configured
-
+```
 open UI: 
  `minikube service --namespace=default grafana` 
 
@@ -48,7 +51,7 @@ Copy the URL from the prometheus taband use as URL in grafana
 
 ## Node app 
 `kubectl apply -f minikube_config/node-app.yml`
-
+```
 ->  deployment "node-app" configured
     service "node-app" configured 
-
+```
