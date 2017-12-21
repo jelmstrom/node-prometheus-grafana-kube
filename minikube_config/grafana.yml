@@ -47,7 +47,7 @@ spec:
 
 kind: Service
 metadata:
-  name: grafana
+  name: grafana-svc
 spec:
   ports:
   - port: 80
@@ -56,3 +56,21 @@ spec:
   selector:
     name: grafana
   type: NodePort
+
+--- 
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: grafana.jelmstrom.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana-svc
+          servicePort: 80

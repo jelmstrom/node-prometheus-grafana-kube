@@ -46,8 +46,8 @@ Create config :
 open UI: 
  `minikube service --namespace=default grafana` 
 
-Configure prometheus datasource
-Copy the URL from the prometheus taband use as URL in grafana  
+Configure prometheus datasource as `http://prometheus` using the `proxy` option in grafana. This works because the service port is `80` 
+This is a good example of how applicaiton config becomes more simple. no need to pass in paramaters to differentiate i.e. api calls or databnase locations. Use a service name and it will use the internal dns to look up the IP.
 
 ## Node app 
 `kubectl apply -f minikube_config/node-app.yml`
