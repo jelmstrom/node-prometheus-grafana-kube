@@ -1,5 +1,5 @@
 # node-prometheus-grafana-kube
-Report metrics from node on kubernetes top grafana via prometheus
+Report metrics from node on kubernetes to grafana via prometheus
 
 Node app that pusheds random metrics on reporter at set intervals, each available metrics inthe prom-client lib is added.
 
