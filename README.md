@@ -9,10 +9,10 @@ Counter to simulate messages receieved from i.e. mq
 
 Grafana and Prometheus docker images running on minikube scraping the underlying infrastructure as well as pods deployed to kube.
 
-#prerequisite
-Install minikube : https://kubernetes.io/docs/tasks/tools/install-minikube/
-Install kubectl : https://kubernetes.io/docs/tasks/tools/install-kubectl/
-Install helm : https://docs.helm.sh/using_helm/#installing-helm
+## prerequisites
+- [Install minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+- [Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [Install helm](https://docs.helm.sh/using_helm/#installing-helm)
 
 ## Bootstrap
 
