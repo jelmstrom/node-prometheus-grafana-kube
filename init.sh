@@ -16,5 +16,3 @@ done
 
 helm install --name ingress-controller stable/nginx-ingress --namespace kube-system --set controller.hostNetwork=true,controller.kind=DaemonSet --set rbac.create=true
 helm install --name metrics charts/metrics
-echo "$(minikube ip)  grafana.kube.com"  >> hosts
-echo "$(minikube ip)  prometheus.kube.com"  >> hosts
