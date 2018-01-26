@@ -2,6 +2,7 @@
 
 minikube start --bootstrapper kubeadm
 kubectl apply -f minikube_config/tiller.yml
+kubectl apply -f minikube_config/propmetheus-roles.yml
 kubectl apply -f minikube_config/default_backend.yml
 helm init --service-account tiller
 

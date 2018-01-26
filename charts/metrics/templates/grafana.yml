@@ -1,27 +1,32 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
+  name: "{{ template "metrics.chart" . }}-grafana"
   labels:
-    name: grafana
-  name: grafana
+    app: "{{ template "metrics.name" . }}-grafana"
+    release: "{{ .Release.Name }}-grafana"
+    chart: "{{ template "metrics.chart" . }}-grafana"
+    heritage: "{{ .Release.Service }}-grafana"
 spec:
-  replicas: 1
+  replicas: {{ .Values.grafana.replicas }}
   selector:
     matchLabels:
-      name: grafana
+      app: "{{ template "metrics.name" . }}-grafana"
+      release: "{{ .Release.Name }}-grafana"
   strategy:
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+      maxSurge: "{{ .Values.grafana.deploy.maxSurge }}"
+      maxUnavailable: "{{ .Values.grafana.deploy.maxUnavailable }}"
     type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        name: grafana
+        app: "{{ template "metrics.name" . }}-grafana"
+        release: "{{ .Release.Name }}-grafana"
     spec:
       containers:
-      - image: grafana/grafana:4.6.3
+      - image: "{{ .Values.grafana.image }}:{{ .Values.grafana.tag }}"
         imagePullPolicy: IfNotPresent
         name: grafana
         ports:
@@ -47,14 +52,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: grafana-svc
+  name: "{{ .Release.Name }}-grafana-svc"
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 3000
   selector:
-    name: grafana
+      app: "{{ template "metrics.name" . }}-grafana"
+      release: "{{ .Release.Name }}-grafana"
   type: NodePort
 
 ---
@@ -72,5 +78,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: grafana-svc
+          serviceName: "{{ .Release.Name }}-grafana-svc"
           servicePort: 80

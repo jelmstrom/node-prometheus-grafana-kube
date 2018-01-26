@@ -1,0 +1,40 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "node-app.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
+{{- $ingressPath := .Values.ingress.path -}}
+{{- $release := .Release -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ template "node-app.name" . }}
+    chart: {{ template "node-app.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if .Values.ingress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ include "node-app.nsprefix" $release }}{{ . }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: http
+  {{- end }}
+{{- end }}
